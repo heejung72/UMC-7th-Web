@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>UMC Study Plan</title>
+        
+        <style>
+            body {
+                display:flex;
+                justify-content :center;
+                align-items: center;
+                margin : 0;
+                font-family: Arial, sans-serif;
+                background-color: #f0f4f8;
+                color: #333;
+                font-weight: bold;
+            }
+
+            .container {
+                display :flex;
+                flex-direction: column;
+                align-items: center;
+                width: 50%;
+                height : 20%;
+                margin: 0 auto;
+                text-align: center;
+                padding: 20px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin: 80px;
+
+            }
+
+            hr {
+                width: 100%; 
+                color:rgb(185, 200, 222);
+            }
+
+            input[type="text"] {
+                width: 80%;
+                padding: 10px;
+                margin: 20px auto;
+                display : block;
+                font-size: 1rem;
+                border: 3px solid black;
+                border-radius: 0px;
+        
+            }
+            input[type="text"]::placeholder {
+                font-style:italic;
+                font-weight : normal;
+            }
+
+            section {
+                margin: 20px 0;
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+                border : none;
+                
+            }
+
+            li {
+                padding: 10px;
+                border-bottom : 3px solid rgb(185, 200, 222);
+                margin : 0;
+                border-radius: 0px;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .task-btn {
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                
+            }
+
+            .complete-btn {
+                background-color: rgb(185, 200, 222);
+                color: white;
+                border: 0px ;
+            }
+
+            .delete-btn {
+                background-color: rgb(185, 200, 222);
+                color: white;
+                border: 0px ;
+            }
+
+        .todo {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        section {
+            width: 45%;
+            text-align : center; 
+        }
+        u{
+            text-decoration : underline;
+            text-decoration-color : rgb(185, 200, 222);
+        }
+
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h1>UMC Study Plan</h1>
+            <hr>
+            <div>
+                <input type="text" id="taskInput" placeholder="스터디 계획을 작성해보세요!">
+                <div class="todo">
+                    <section id="listSecton">
+                        <span><b><u>해야 할 일</u></b></span>
+                        <ul id="taskList">
+                            <!-- 할 일 목록 -->
+                        </ul>
+                    </section>
+                    <section id="doneSection">
+                        <span><b><u>해낸 일</u></b></span>
+                        <ul id="taskFinish">
+                            <!-- 해낸 일 목록 -->
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+            const taskFinish = document.getElementById('taskFinish');
+
+            // Enter 키를 눌렀을 때 할 일 추가
+            taskInput.addEventListener('keydown', (event) => {
+                if (event.key === "Enter") {
+                    addTask();
+                }
+            });
+
+            // 할 일 추가 함수
+            function addTask() {
+                const taskValue = taskInput.value.trim();
+                if (taskValue !== '') {
+                    const taskItem = document.createElement('li');
+                    const completeButton = document.createElement('button');
+
+                    taskItem.textContent = taskValue;
+                    completeButton.textContent = '완료';
+                    completeButton.classList.add('complete-btn');
+
+                    completeButton.addEventListener('click', function() {
+                        completeTask(taskItem);
+                    });
+
+                    taskItem.appendChild(completeButton);
+                    taskList.appendChild(taskItem);
+
+                    // 입력 필드 초기화
+                    taskInput.value = '';
+                }
+            }
+
+            // 할 일 완료 함수
+            function completeTask(listItem) {
+                taskList.removeChild(listItem);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '삭제';
+                deleteButton.classList.add('delete-btn');
+
+                deleteButton.addEventListener('click', function() {
+                    taskFinish.removeChild(listItem);
+                });
+
+                listItem.removeChild(listItem.querySelector('button')); // 기존 완료 버튼 제거
+                listItem.appendChild(deleteButton);
+
+                taskFinish.appendChild(listItem);
+            }
+        </script>
+    </body>
+</html>
