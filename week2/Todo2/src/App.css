@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+}
+
+.todo-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.todo-input {
+  margin-right: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.todo-list {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.edit-input {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #f0f0f0;
+}
+
+.table-container {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden; /* 테두리 처리 */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* 테두리 겹침 제거 */
+}
+
+.table th, .table td {
+  border: 1px solid #ddd; /* 셀 테두리 */
+  padding: 8px;
+  text-align: center; /* 중앙 정렬 */
+}
+
+.table th {
+  background-color: #f2f2f2; /* 헤더 배경색 */
+}
+
+.table button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.table button:hover {
+  background-color: #f0f0f0; /* 버튼 호버 효과 */
+}
+
