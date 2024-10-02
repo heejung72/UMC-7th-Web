@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMC_NAV</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif; /* 기본 폰트 설정 */
+            background-color: white; /* 배경색 설정 */
+        }
+
+        /* 내비게이션 바 스타일 */
+        .navbar {
+            display: flex; /* flexbox로 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+            justify-content: space-between; /* 좌우 공간을 자동으로 배분 */
+            padding: 10px 20px; /* 여백 설정 */
+            background-color: WHITE; /* 내비게이션 배경색 */
+            border-bottom: 1px solid #e0e0e0; /* 하단 경계선 */
+        }
+
+        .navbar img {
+            height: 40px; /* 로고 크기 조정 */
+            margin-right: 10px; /* 오른쪽 여백 */
+        }
+
+        .nav-left, .nav-right {
+            display: flex; /* 가로로 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+        }
+
+        .nav-left p {
+            margin: 0; /* 여백 제거 */
+        }
+
+        .nav-links {
+            display: flex; /* 가로로 정렬 */
+        }
+
+        .nav-links p {
+            margin: 0 15px; /* 각 항목의 좌우 여백 */
+            cursor: pointer; /* 커서 모양 변경 */
+            transition: color 0.3s; /* 마우스 오버 시 색상 변화 효과 */
+        }
+
+        .nav-links p:hover {
+            color: purple; /* 마우스 오버 시 색상 변화 */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="./LOGO.png" alt="Logo">
+            <p>SMUMC</p>
+        </div>
+        <div class="nav-right">
+            <div class="nav-links">
+                <p>PROJECTS</p>
+                <p>MEMBERS</p>
+                <p>NOTICE</p>
+            </div>
+            <img src="./SUN.png" alt="SUN">
+        </div>
+    </nav>
+</body>
+</html>
+
+
