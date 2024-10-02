@@ -4,14 +4,10 @@
   align-items: center;
   margin : 200px;
 }
-.movie-image {
-  transition: filter 0.3s ease; /* Smooth transition for the effect */
-}
 
 .movie-image:hover {
   filter: brightness(50%); /* Adjust the brightness on hover */
 }
-
 
 .movie-grid {
   display: flex;
@@ -24,17 +20,9 @@
   width:100px ;height: 170px; /* 적절한 크기로 설정 */
   margin: 5px;
   border-radius: 8px;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
+  transition: filter 0.3s ease; /* Smooth transition for the effect */
 }
 
-td {
-  border: 1px solid #ddd;
-  padding: 5px;
-  text-align: center;
-}
 
 img {
   width: 100px; /* 원하는 너비 설정 */
