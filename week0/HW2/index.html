@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex and Grid Layout</title>
+    <style>
+      /* 전체 레이아웃을 위한 스타일 */
+      body {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-rows: 60px 1fr 100px; /* 세 개의 행: 헤더, 본문, 배너 */
+        grid-template-columns: 1fr 1fr 1fr; /* 세 개의 열 */
+        height: 100vh;
+      }
+
+      /* 헤더와 메뉴를 나란히 배치 */
+      #HEADER {
+        grid-column: 1 / 2;
+        background-color: navy;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #MENU {
+        grid-column: 2 / 4;
+        background-color: crimson;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 히어로 섹션 */
+      #HERO {
+        grid-column: 1 / 4;
+        background-color: steelblue;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 메인, 이미지, 엑스트라 섹션을 레이아웃 */
+      #MAIN {
+        grid-column: 1 / 2;
+        background-color: darkslategray;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #IMAGE {
+        grid-column: 3 / 4;
+        background-color: lightcyan;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #EXTRA {
+        grid-column: 3 / 4;
+        background-color: lightgreen;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 배너 */
+      #BANNER {
+        grid-column: 1 / 4;
+        background-color: gold;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 공백 스타일 */
+      .empty-space {
+        grid-column: 2 / 3;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="HEADER">HEADER</div>
+    <div id="MENU">MENU</div>
+    <div id="HERO">HERO</div>
+    <div id="MAIN">MAIN</div>
+    <div class="empty-space"></div> <!-- 흰색 공백 -->
+    <div id="IMAGE">IMAGE</div>
+    <div id="EXTRA">EXTRA</div>
+    <div id="BANNER">BANNER</div>
+  </body>
+</html>
