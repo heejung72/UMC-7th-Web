@@ -1,0 +1,33 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin : 200px;
+  }
+  
+  .movie-image:hover {
+    filter: brightness(50%); /* Adjust the brightness on hover */
+  }
+  
+  .movie-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .movie-image {
+    width:100px ;height: 170px; /* 적절한 크기로 설정 */
+    margin: 5px;
+    border-radius: 8px;
+    transition: filter 0.3s ease; /* Smooth transition for the effect */
+  }
+  
+  
+  img {
+    width: 100px; /* 원하는 너비 설정 */
+    height: 200px; /* 너비의 두 배로 높이 설정 */
+    object-fit: cover; /* 이미지 비율 유지 */
+  }
+  
+  
