@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const MovieCard = ({movie}) => {
+const MovieCard = ({Movies}) => {
     const navigate = useNavigate();
 
     return(
-        <MovieItem onClick={() => {navigate(`/movies/${movie.id}`);}}>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt='영화 포스터' />
+        <MovieItem onClick={() => {navigate(`/movies/${Movies.id}`);}}>
+            <img src={`https://image.tmdb.org/t/p/w500${Movies.poster_path}`} alt='영화 포스터' />
             <div className='overView'/>
             <Info>
-                <div className="title">{movie.title}</div>
-                <div className="release_date">{movie.release_date}</div>    
+                <div className="title">{Movies.title}</div>
+                <div className="release_date">{Movies.release_date}</div>   s 
             </Info>        
         </MovieItem>
     );
