@@ -6,31 +6,30 @@ import { IoMdSearch } from 'react-icons/io';
 import { MdMovieCreation } from 'react-icons/md';
 
 const SidebarContainer = styled.div`
-  background-color: #222;
-  color: white;
-  width: 250px;
-  padding: 20px;
+background-color: #131517;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin-top: 70px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+
+    a {
+        color: white;
+        text-decoration: none;
+        margin-left: 10px;
+    }
 `;
 
 const SidebarButton = styled.button`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #444;
-  color: white;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    background-color: #666;
-  }
+cursor: pointer;
+    justify-content: space-between;
+    color: white;
+    margin: 20px 0 20px 10px;
 `;
 
-const CategoryList = styled.div`
-  padding-left: 20px;
-  display: ${({ visible }) => (visible ? 'block' : 'none')};
-`;
 
 const Sidebar = () => {
   const [movieCategoriesVisible, setMovieCategoriesVisible] = useState(false);
@@ -48,14 +47,8 @@ const Sidebar = () => {
         <MdMovieCreation style={{ marginRight: '10px' }} />
         영화
       </SidebarButton>
+      </SidebarContainer>
 
-      <CategoryList visible={movieCategoriesVisible}>
-        <Link to="/movies/now-playing"><SidebarButton>현재 상영중인</SidebarButton></Link>
-        <Link to="/movies/popular"><SidebarButton>인기있는</SidebarButton></Link>
-        <Link to="/movies/top-rated"><SidebarButton>높은 평가를 받은</SidebarButton></Link>
-        <Link to="/movies/up-coming"><SidebarButton>개봉 예정중인</SidebarButton></Link>
-      </CategoryList>
-    </SidebarContainer>
   );
 };
 

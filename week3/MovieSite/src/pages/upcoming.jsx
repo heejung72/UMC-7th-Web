@@ -1,40 +1,45 @@
+import styled from "styled-components";
+import MovieCard from "../components/moviecards"; // 경로 확인
+import useCustomFetch from "../hooks/useCustomFetch";
 
-import  { useEffect, useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
-const PageContainer = styled.div`
-  background-color: #111111;
-  min-height: 100vh;
-  min-width: 170vh;
-`;
-const Title = styled.h1`
-  color: white; 
-  margin-left:10px;
-   font-size: 15px; 
-`;
 const UpComing = () => {
-  const [movies, setMovies] = useState([]);
+    const { data: movies, isLoading, isError } = useCustomFetch(`/movie/upcoming?language=ko-kr&page=1`); // 올바른 API 엔드포인트 확인
+    
+    if (isLoading) {
+        return (
+            <div>
+                <h1>로딩중 입니다.</h1>
+            </div>
+        );
+    }
+    
+    if (isError) {
+        return (
+            <div>
+                <h1>에러가 발생했습니다.</h1>
+            </div>
+        );
+    }
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await axios.get(
-        'https://api.themoviedb.org/3/movie/upcoming?api_key=YOUR_API_KEY&language=ko-KR'
-      );
-      setMovies(response.data.results);
-    };
-    fetchMovies();
-  }, []);
-
-  return (<Title>
-    <PageContainer> <div>
-      <h1>개봉 예정 영화</h1>
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>{movie.title}</li>
-        ))}
-      </ul>
-    </div></PageContainer></Title>
-  );
+    return (
+        <MoviesContainer>
+            {movies.results.map((movie) => (
+                <MovieCard 
+                    key={movie.id}
+                    poster={movie.poster_path}
+                    title={movie.title}
+                    releaseDate={movie.release_date}
+                />
+            ))}
+        </MoviesContainer>
+    );
 };
 
 export default UpComing;
+
+const MoviesContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+    padding: 20px;
+`;

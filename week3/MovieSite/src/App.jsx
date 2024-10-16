@@ -1,68 +1,84 @@
 import './App.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import HomePage from './pages/home'
+import Login from './pages/login'
+import SignUp from './pages/signup'
+import Search from './pages/search'
+import Movies from './pages/movies'
+import RootLayout from './layout/rootlayout'
+import NowPlaying from './pages/nowplaying'
+import Popular from './pages/popular'
+import TopRated from './pages/topRated'
+import UpComing from './pages/upcoming'
+// import { MOVIES } from './mocks/movies'
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from './pages/home';
-import Login from './pages/login';
-import SignupPage from './pages/signup';
-import SearchPage from './pages/search';
-import Movies from './pages/movies';
-import RootLayout from './layout/rootlayout';
-import NowPlaying from './pages/nowplaying';
-import Popular from './pages/popular';
-import TopRated from './pages/topRated';
-import UpComing from './pages/upcoming';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: <RootLayout/>,
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <HomePage/>
       },
       {
         path: 'login',
-        element: <Login />
+        element: <Login/>
       },
       {
-        path: 'signup',
-        element: <SignupPage />
+        path: 'sign-up',
+        element: <SignUp/>
       },
       {
         path: 'search',
-        element: <SearchPage />
+        element: <Search/>
       },
       {
         path: 'movies',
-        element: <Movies />,  // 'movies' 경로는 이곳에서 정의
-        children: [
-          {
-            path: 'now-playing',  // 경로는 'now-playing'으로 유지
-            element: <NowPlaying />
-          },
-          {
-            path: 'popular',
-            element: <Popular />
-          },
-          {
-            path: 'top-rated',  // 'toprated' -> 'top-rated'로 수정
-            element: <TopRated />
-          },
-          {
-            path: 'up-coming',  // 'upcoming' -> 'up-coming'으로 수정
-            element: <UpComing />
-          }
-        ]
+        element: <Movies/>
       }
     ]
-  }
-]);
+  },
+  {
+    path: '/movies',
+    element: <RootLayout/>,
+    children: [
+      {
+        index: true,
+        element: <Movies/>
+      },
+      {
+        path: 'now-playing',
+        element: <NowPlaying/>
+      }
+      ,
+      {
+        path: 'popular',
+        element: <Popular/>
+      }
+      ,
+      {
+        path: 'top-rated',
+        element: <TopRated/>
+      }
+      ,
+      {
+        path: 'up-coming',
+        element: <UpComing/>
+      }
+      ,
+      {
+        path: ':movieId'
+      }
+    ]
+  },
+])
 
 function App() {
-  return (
-    <RouterProvider router={router} />
+  return( 
+      <RouterProvider router={router} />
   );
 }
 
-export default App;
+export default App

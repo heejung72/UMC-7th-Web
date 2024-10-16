@@ -3,34 +3,58 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    top: 0;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #131517;
+    color: red;
+    padding: 0 20px;
+    height: 70px;
+    &: hover {
+            color: white;
+        }
 `;
 
 const Logo = styled.h1`
   cursor: pointer;
-  color: #purple;
+  color: #red;
   &:hover {
-    color: #red;
+    color: #yellow;
   }
 `;
 
-const Button = styled.button`
-  background-color: #555;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin-left: 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: #f4c542;
-  }
-`;
+const Log = styled.log`
+  width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 60px;
 
+    a {
+        color: white;
+        text-decoration: none;
+        margin: 0 5px;
+        font-size: 15px;
+    }
+`;
+const Sign = styled.Sign`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e83261;
+    border-radius: 5px;
+    width: 90px;
+    height: 40px;
+
+    &:hover {
+        background-color: blue;
+    }
+`;
 const Navbar = () => {
   return (
     <Nav>
@@ -39,10 +63,10 @@ const Navbar = () => {
       </Link>
       <div>
         <Link to="/login">
-          <Button>로그인</Button>
+          <Log>로그인</Log>
         </Link>
         <Link to="/signup">
-          <Button>회원가입</Button>
+          <Sign>회원가입</Sign>
         </Link>
       </div>
     </Nav>

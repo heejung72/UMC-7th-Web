@@ -1,40 +1,50 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const PageContainer = styled.div`
-  background-color: #black;
-  min-height: 100vh;
-  min-width: 130vh;
-`;
-const Title = styled.h1`
-  color: white; 
-  margin-left:10px;
-   font-size: 15px; 
-`;
-const NowPlaying = () => {
-  const [movies, setMovies] = useState([]);
+const Movies = () => {
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await axios.get(
-        'https://api.themoviedb.org/3/movie/now_playing?api_key=YOUR_API_KEY&language=ko-KR'
-      );
-      setMovies(response.data.results);
-    };
-    fetchMovies();
-  }, []);
-
-  return (
-    <PageContainer><Title>
-      <h1>현재 상영중인 영화</h1>
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>{movie.title}</li>
-        ))}
-      </ul>
-   </Title> </PageContainer>
-  );
+    return (
+        <Container>
+            <div className="title">카테고리</div>
+            <CategoryWrapper>
+                <div className="nowplaying category" onClick={() => navigate('/movies/nowplaying')}>현재 상영중인</div>
+                <div className="popular category" onClick={() => navigate('/movies/popular')}> 인기있는</div>
+                <div className="toprated category" onClick={() => navigate('/movies/topRated')}>높은 평가를 받은</div>
+                <div className="upcoming category" onClick={() => navigate('/movies/upcoming')}>개봉 예정중인</div>                
+            </CategoryWrapper>
+        </Container>
+    );
 };
 
-export default NowPlaying;
+export default Movies;
+
+const Container = styled.div`
+.title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+`
+
+const CategoryWrapper = styled.div`
+    display: flex;
+    align-items: center;
+
+    .nowplaying{ background-color: red; }
+    .popular { background-color: orange; }
+    .topRated { background-color: yellow; }
+    .upcoming { background-color: green; }
+
+    .category {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20px;
+        width: 250px;
+        height: 100px;
+        border-radius: 20px;
+        color: black;
+        cursor: pointer;
+    }
+`;
