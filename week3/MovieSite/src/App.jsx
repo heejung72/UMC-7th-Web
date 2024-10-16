@@ -2,13 +2,13 @@ import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './pages/home'
 import Login from './pages/login'
-import SignUp from './pages/signup'
+import SignupPage from './pages/signup'
 import Search from './pages/search'
 import Movies from './pages/movies'
 import RootLayout from './layout/rootlayout'
 import NowPlaying from './pages/nowplaying'
 import Popular from './pages/popular'
-import TopRated from './pages/topRated'
+import TopRated from './pages/toprated'
 import UpComing from './pages/upcoming'
 // import { MOVIES } from './mocks/movies'
 
@@ -27,8 +27,8 @@ const router = createBrowserRouter([
         element: <Login/>
       },
       {
-        path: 'sign-up',
-        element: <SignUp/>
+        path: 'signup',
+        element: <SignupPage/>
       },
       {
         path: 'search',
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         element: <Movies/>
       },
       {
-        path: 'now-playing',
+        path: 'nowplaying',
         element: <NowPlaying/>
       }
       ,
@@ -59,12 +59,12 @@ const router = createBrowserRouter([
       }
       ,
       {
-        path: 'top-rated',
+        path: 'toprated',
         element: <TopRated/>
       }
       ,
       {
-        path: 'up-coming',
+        path: 'upcoming',
         element: <UpComing/>
       }
       ,

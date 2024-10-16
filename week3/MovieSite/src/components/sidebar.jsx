@@ -6,7 +6,7 @@ import { IoMdSearch } from 'react-icons/io';
 import { MdMovieCreation } from 'react-icons/md';
 
 const SidebarContainer = styled.div`
-background-color: #131517;
+background-color: black;
     position: fixed;
     left: 0;
     top: 0;
@@ -24,6 +24,7 @@ background-color: #131517;
 `;
 
 const SidebarButton = styled.button`
+background-color: black;   border: none;   padding: 10px;text-align: left; 
 cursor: pointer;
     justify-content: space-between;
     color: white;
@@ -43,10 +44,12 @@ const Sidebar = () => {
         </SidebarButton>
       </Link>
 
+      <Link to="/movies">
       <SidebarButton onClick={() => setMovieCategoriesVisible(!movieCategoriesVisible)}>
         <MdMovieCreation style={{ marginRight: '10px' }} />
         영화
       </SidebarButton>
+      </Link>
       </SidebarContainer>
 
   );

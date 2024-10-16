@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MovieCard from "../components/moviecards"; // 경로 확인
+import MovieCard from "../components/moviecards";  // 경로 확인
 import useCustomFetch from "../hooks/useCustomFetch";
 
 const UpComing = () => {

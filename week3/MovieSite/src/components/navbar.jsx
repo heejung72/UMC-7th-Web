@@ -27,48 +27,51 @@ const Logo = styled.h1`
   }
 `;
 
-const Log = styled.log`
+const Log = styled.div`
   width: 200px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
-    margin-right: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 60px;
 
-    a {
-        color: white;
-        text-decoration: none;
-        margin: 0 5px;
-        font-size: 15px;
-    }
+  a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+    font-size: 15px;
+  }
 `;
-const Sign = styled.Sign`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e83261;
-    border-radius: 5px;
-    width: 90px;
-    height: 40px;
 
-    &:hover {
-        background-color: blue;
-    }
+const Sign = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e83261;
+  border-radius: 5px;
+  width: 90px;
+  height: 40px;
+
+  &:hover {
+    background-color: blue;
+  }
 `;
+
+
+
+
 const Navbar = () => {
   return (
     <Nav>
       <Link to="/">
         <Logo>YOUNGCHA</Logo>
       </Link>
-      <div>
-        <Link to="/login">
-          <Log>로그인</Log>
-        </Link>
+      <Log>
+        <Link to="/login">로그인</Link>
         <Link to="/signup">
           <Sign>회원가입</Sign>
         </Link>
-      </div>
+      </Log>
     </Nav>
   );
 };
