@@ -10,6 +10,7 @@ import NowPlaying from './pages/nowplaying'
 import Popular from './pages/popular'
 import TopRated from './pages/toprated'
 import UpComing from './pages/upcoming'
+import MovieDetail from './pages/MovieDetail';
 // import { MOVIES } from './mocks/movies'
 
 
@@ -69,7 +70,8 @@ const router = createBrowserRouter([
       }
       ,
       {
-        path: ':movieId'
+        path: ':movieId',
+        element: <MovieDetail />
       }
     ]
   },

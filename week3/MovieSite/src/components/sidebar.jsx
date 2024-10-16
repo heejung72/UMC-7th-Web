@@ -6,7 +6,7 @@ import { IoMdSearch } from 'react-icons/io';
 import { MdMovieCreation } from 'react-icons/md';
 
 const SidebarContainer = styled.div`
-background-color: black;
+background-color: #131517;
     position: fixed;
     left: 0;
     top: 0;
@@ -24,7 +24,7 @@ background-color: black;
 `;
 
 const SidebarButton = styled.button`
-background-color: black;   border: none;   padding: 10px;text-align: left; 
+background-color: #131517;   border: none;   padding: 10px;text-align: left; 
 cursor: pointer;
     justify-content: space-between;
     color: white;

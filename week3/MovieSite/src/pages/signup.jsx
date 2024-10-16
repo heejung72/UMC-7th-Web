@@ -7,7 +7,7 @@ const Container = styled.div`
 
 const SignupPage = () => {
   return (<Container>
-    <h1>회원가입 페이지</h1>
+    <div>회원가입 페이지</div>
 </Container>);};
 
 export default SignupPage;

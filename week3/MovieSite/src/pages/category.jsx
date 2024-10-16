@@ -5,7 +5,9 @@ const Categories = () => {
   const navigate = useNavigate();
 
   return (
+    
     <CategoryContainer>
+      <CategoryTitle>카테고리</CategoryTitle>
       <CategoryBox onClick={() => navigate('/movies/now-playing')}>현재 상영중인</CategoryBox>
       <CategoryBox onClick={() => navigate('/movies/popular')}>인기있는</CategoryBox>
       <CategoryBox onClick={() => navigate('/movies/top-rated')}>높은 평가를 받은</CategoryBox>
@@ -32,6 +34,10 @@ const CategoryBox = styled.div`
   &:hover {
     background-color: #f50057;
   }
+`;
+const CategoryTitle = styled.h2`
+  font-size: 2rem; /* H2 크기로 설정 */
+  color: white; /* 필요에 따라 색상 조정 */
 `;
 
 export default Categories;

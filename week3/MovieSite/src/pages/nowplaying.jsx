@@ -1,41 +1,49 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'; 
-import MovieCard from "../components/moviecards"; 
+import MovieCard from '../components/moviecards'; 
+import {axiosInstance} from '../apis/axios-instance';
+import useCustomFetch from "../hooks/useCustomFetch";
 
-const MovieGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-`;
+
+
 
 const NowPlaying = () => {
-  const [movies, setMovies] = useState([]);
+  const { data: movies, isLoading, isError } = useCustomFetch(`/movie/now_playing?language=ko-kr&page=1`);
+  if (isLoading) {
+    return (
+        <div>
+            <h1>로딩중 입니다.</h1>
+        </div>
+    );
+}
 
-  useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=YOUR_API_KEY&language=ko-KR&page=1`);
-        setMovies(response.data.results); // API 결과값 설정
-      } catch (error) {
-        console.error('Error fetching now playing movies:', error);
-      }
-    };
-
-    getMovies();
-  }, []);
+if (isError) {
+    return (
+        <div>
+            <h1>에러가 발생했습니다.</h1>
+        </div>
+    );
+}
 
   return (
-    <div>
-      <h1>현재 상영중인 영화</h1>
-      <MovieGrid>
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} /> 
+      <MoviesContainer>
+        {movies.data?.results.map((movie) => (
+          <MovieCard
+          key={movie.id}
+          poster={movie.poster_path}
+          title={movie.title}
+          releaseDate={movie.release_date}
+          movie = {movie} /> 
         ))}
-      </MovieGrid>
-    </div>
+      </MoviesContainer>
   );
 };
 
+
 export default NowPlaying;
+const MoviesContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-gap: 15px;
+`;

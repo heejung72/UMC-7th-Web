@@ -21,7 +21,7 @@ const Nav = styled.nav`
 
 const Logo = styled.h1`
   cursor: pointer;
-  color: #red;
+   color: ${(props) => (props.isClicked ? 'yellow' : '#e83261')};
   &:hover {
     color: #yellow;
   }
@@ -63,8 +63,8 @@ const Sign = styled.div`
 const Navbar = () => {
   return (
     <Nav>
-      <Link to="/">
-        <Logo>YOUNGCHA</Logo>
+      <Link to="/" style={{ textDecoration: 'none'}}>
+        <Logo >YOUNGCHA</Logo>
       </Link>
       <Log>
         <Link to="/login">로그인</Link>

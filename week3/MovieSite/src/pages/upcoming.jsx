@@ -1,5 +1,8 @@
-import styled from "styled-components";
-import MovieCard from "../components/moviecards";  // 경로 확인
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components'; 
+import MovieCard from '../components/moviecards'; 
+import {axiosInstance} from '../apis/axios-instance';
 import useCustomFetch from "../hooks/useCustomFetch";
 
 const UpComing = () => {
@@ -23,12 +26,13 @@ const UpComing = () => {
 
     return (
         <MoviesContainer>
-            {movies.results.map((movie) => (
+            {movies.data?.results.map((movie) => (
                 <MovieCard 
                     key={movie.id}
                     poster={movie.poster_path}
                     title={movie.title}
                     releaseDate={movie.release_date}
+                    movie = {movie}
                 />
             ))}
         </MoviesContainer>
@@ -36,10 +40,8 @@ const UpComing = () => {
 };
 
 export default UpComing;
-
 const MoviesContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     grid-gap: 15px;
-    padding: 20px;
 `;

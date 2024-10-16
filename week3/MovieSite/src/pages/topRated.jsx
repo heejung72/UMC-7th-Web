@@ -1,6 +1,10 @@
-import styled from "styled-components";
-import MovieCard from "../components/moviecards"; 
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components'; 
+import MovieCard from '../components/moviecards'; 
+import {axiosInstance} from '../apis/axios-instance';
 import useCustomFetch from "../hooks/useCustomFetch";
+
 
 const TopRated = () => {
   const { data: movies, isLoading, isError } = useCustomFetch(`/movie/top_rated?language=ko-kr&page=1`);
@@ -23,12 +27,13 @@ const TopRated = () => {
 
   return (
       <MoviesContainer>
-          {movies.results.map((movie) => (
+          {movies.data?.results.map((movie) => (
               <MovieCard 
                   key={movie.id}
                   poster={movie.poster_path}
                   title={movie.title}
                   releaseDate={movie.release_date}
+                  movie = {movie}
               />
           ))}
       </MoviesContainer>
