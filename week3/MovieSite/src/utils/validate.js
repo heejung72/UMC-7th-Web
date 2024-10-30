@@ -30,10 +30,10 @@ function validateLogin(values) {
 
 const validateSignup = (values) => {
     const errors = validateUser(values);
-    if (!values.passwordCheck) {
-        errors.passwordCheck = '비밀번호 검증 또한 필수 입력요소입니다.';
-    } else if (values.password !== values.passwordCheck) {
-        errors.passwordCheck = '비밀번호가 일치하지 않습니다.';
+    if (!values.password2) {
+        errors.password2 = '비밀번호 검증 또한 필수 입력요소입니다.';
+    } else if (values.password !== values.password2) {
+        errors.password2 = '비밀번호가 일치하지 않습니다.';
     }
     return errors;
 };

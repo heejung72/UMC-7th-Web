@@ -70,7 +70,7 @@ const Input = styled.input`
     margin: 10px 0;
     border: 1px solid ${({ error, touched }) => (error && touched ? 'red' : '#ccc')};
     border-radius: 4px;
-    width: 100%;
+        width: 500px;
     box-sizing: border-box;
     &:focus {
         outline: none;

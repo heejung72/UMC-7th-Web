@@ -7,12 +7,11 @@ const SignupPage = () => {
       initialValues: {
         email: '',
         password: '',
-        password2:'',
+        password2: '',
       }, 
       validate: validateSignup
     });
 
-    // handleSubmit 함수 정의
     const handleSubmit = (event) => {
         event.preventDefault();
         if (Object.keys(login.errors).length === 0) {
@@ -23,10 +22,10 @@ const SignupPage = () => {
         }
     };
 
+    
     return (
         <Container>
             <h1>회원가입</h1>
-            {/* handleSubmit을 form의 onSubmit에 연결 */}
             <form onSubmit={handleSubmit}>
                 <Input 
                     error={login.errors.email}
@@ -38,7 +37,8 @@ const SignupPage = () => {
                 {login.touched.email && login.errors.email && <ErrorMsg>{login.errors.email}</ErrorMsg>}
                 
                 <Input 
-                    error={login.touched.password && login.errors.password}
+                    error={login.errors.password}
+                    touched={login.touched.password}
                     type="password"
                     placeholder="비밀번호를 입력해주세요!" 
                     {...login.getTextInputProps('password')}
@@ -46,19 +46,19 @@ const SignupPage = () => {
                 {login.touched.password && login.errors.password && <ErrorMsg>{login.errors.password}</ErrorMsg>}    
 
                 <Input 
-                    error={login.touched.password && login.errors.password}
-                    type="againpassword"
-                    placeholder="비밀번호를 입력해주세요!" 
-                    {...login.getTextInputProps('agianpassword')}
+                    error={login.errors.password2}
+                    touched={login.touched.password2}
+                    type="password"
+                    placeholder="비밀번호를 다시 입력해주세요!" 
+                    {...login.getTextInputProps('password2')}
                 />
-                {login.touched.password && login.errors.password && <ErrorMsg>{login.errors.password}</ErrorMsg>}             
+                {login.touched.password2 && login.errors.password2 && <ErrorMsg>{login.errors.password2}</ErrorMsg>}             
 
                 <Button type='submit'>회원가입</Button>
             </form>
         </Container>
     );
 };
-
 
 export default SignupPage;
 
@@ -78,10 +78,11 @@ const Container = styled.div`
 const Input = styled.input`
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid ${({ error, touched }) => (error && touched ? 'red' : '#ccc')};
+    border: 1px solid transparent;
     border-radius: 4px;
-    width: 100%;
+    width: 500px;
     box-sizing: border-box;
+    border-color: ${({ error, touched }) => (error && touched ? 'red' : '#ccc')};
     &:focus {
         outline: none;
         border-color: #ff4081;
@@ -110,4 +111,3 @@ const Button = styled.button`
         background-color: #ff1a6b;
     }
 `;
-
