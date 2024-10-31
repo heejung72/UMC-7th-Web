@@ -1,37 +1,34 @@
-import { useState, useEffect } from 'react';
+// useForm.js (훅)
+import { useState } from "react";
 
-function useForm({ initialValues, validate }) {
+export default function useForm({ initialValues, validate }) {
     const [values, setValues] = useState(initialValues);
-    const [touched, setTouched] = useState({});
     const [errors, setErrors] = useState({});
+    const [touched, setTouched] = useState({});
 
-    const handleChangeInput = (name, value) => {
-        setValues((prevValues) => ({
-            ...prevValues,
-            [name]: value
-        }));
-    };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setValues({
+            ...values,
+            [name]: value,
+        });
 
-    const handleBlur = (name) => {
-        setTouched((prevTouched) => ({
-            ...prevTouched,
+        // 실시간 검증을 위해 값이 변경될 때마다 에러 업데이트
+        const validationErrors = validate({ ...values, [name]: value });
+        setErrors(validationErrors);
+
+        setTouched({
+            ...touched,
             [name]: true,
-        }));
+        });
     };
 
-    const getTextInputProps = (name) => {
-        const value = values[name];
-        const onChange = (event) => handleChangeInput(name, event.target.value);
-        const onBlur = () => handleBlur(name);
-
-        return { value, onChange, onBlur };
-    };
-
-    useEffect(() => {
-        setErrors(validate(values));
-    }, [validate, values]);
+    const getTextInputProps = (name) => ({
+        name,
+        value: values[name],
+        onChange: handleChange,
+        onBlur: () => setTouched({ ...touched, [name]: true }),
+    });
 
     return { values, errors, touched, getTextInputProps };
 }
-
-export default useForm;
