@@ -1,29 +1,26 @@
-//navbar.jsx
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 
 const Nav = styled.nav`
   display: flex;
-    position: fixed;
-    z-index: 100;
-    width: 100vw;
-    top: 0;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #131517;
-    color: red;
-    padding: 0 20px;
-    height: 70px;
-    &: hover {
-            color: white;
-        }
+  position: fixed;
+  z-index: 100;
+  width: 100vw;
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #131517;
+  color: red;
+  padding: 0 20px;
+  height: 70px;
 `;
 
 const Logo = styled.h1`
   cursor: pointer;
-   color: ${(props) => (props.isClicked ? 'yellow' : '#e83261')};
+  color: ${(props) => (props.isClicked ? 'yellow' : '#e83261')};
   &:hover {
-    color: #yellow;
+    color: yellow;
   }
 `;
 
@@ -57,20 +54,51 @@ const Sign = styled.div`
   }
 `;
 
-
-
-
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 로컬 스토리지에서 accessToken이 있으면 로그인 상태로 간주
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      setIsLoggedIn(true);
+      // 이메일에서 @ 앞부분만 추출하여 사용자 이름 설정
+      const email = localStorage.getItem('email');
+      setUserName(email ? email.split('@')[0] + '님' : '사용자');
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // 로그아웃 처리: 로컬 스토리지에서 토큰 삭제
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('email');
+    
+    setIsLoggedIn(false);
+    navigate('/login');  // 로그인 페이지로 리디렉션
+  };
+
   return (
     <Nav>
-      <Link to="/" style={{ textDecoration: 'none'}}>
-        <Logo >YOUNGCHA</Logo>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <Logo>YOUNGCHA</Logo>
       </Link>
       <Log>
-        <Link to="/login">로그인</Link>
-        <Link to="/signup">
-          <Sign>회원가입</Sign>
-        </Link>
+        {isLoggedIn ? (
+          <>
+            <span>{userName}</span>
+            <button onClick={handleLogout} style={{ color: 'white', background: 'transparent', border: 'none', cursor: 'pointer' }}>로그아웃</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">로그인</Link>
+            <Link to="/signup">
+              <Sign>회원가입</Sign>
+            </Link>
+          </>
+        )}
       </Log>
     </Nav>
   );

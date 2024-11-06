@@ -1,4 +1,3 @@
-// useForm.js (훅)
 import { useState } from "react";
 
 export default function useForm({ initialValues, validate }) {
@@ -28,6 +27,10 @@ export default function useForm({ initialValues, validate }) {
         value: values[name],
         onChange: handleChange,
         onBlur: () => setTouched({ ...touched, [name]: true }),
+        // `touched`는 이제 props로 전달되지 않음
+        // 대신, 필요시 className이나 style을 통해 사용
+        className: touched[name] ? "touched" : "",
+        "aria-invalid": errors[name] ? "true" : "false", // 에러 상태를 반영
     });
 
     return { values, errors, touched, getTextInputProps };

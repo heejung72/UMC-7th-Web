@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import useForm from "../hooks/use-form";
 import { validateSignup } from "../utils/validate";
+import { useNavigate } from "react-router-dom"; // React Router에서 navigate 사용
 
 const SignupPage = () => {
+    const navigate = useNavigate();  // navigate 훅을 사용하여 페이지 이동
+
     const { values, errors, touched, getTextInputProps } = useForm({
         initialValues: {
             email: '',
@@ -12,11 +15,32 @@ const SignupPage = () => {
         validate: validateSignup,
     });
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        
         if (Object.keys(errors).length === 0) {
-            console.log("Form submitted with:", values);
-            // 로그인 API 호출 등을 처리할 수 있습니다.
+            // 회원가입 API 호출
+            const response = await fetch('http://localhost:3000/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: values.email,
+                    password: values.password,
+                    passwordCheck: values.password2,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('회원가입 성공:', data);
+                // 회원가입 성공 후 로그인 페이지로 리디렉션
+                navigate('/login');
+            } else {
+                console.error('회원가입 실패:', data);
+            }
         } else {
             console.log("Validation errors:", errors);
         }
@@ -27,6 +51,8 @@ const SignupPage = () => {
             <h1>회원가입</h1>
             <form onSubmit={handleSubmit}>
                 <Input 
+                id="email" 
+                name="email" 
                     error={errors.email}
                     touched={touched.email}
                     type="email"
@@ -36,6 +62,8 @@ const SignupPage = () => {
                 {touched.email && errors.email && <ErrorMsg>{errors.email}</ErrorMsg>}
                 
                 <Input 
+                    id="password" 
+                    name="password" 
                     error={errors.password}
                     touched={touched.password}
                     type="password"
@@ -45,6 +73,8 @@ const SignupPage = () => {
                 {touched.password && errors.password && <ErrorMsg>{errors.password}</ErrorMsg>}    
 
                 <Input 
+                                id="password2" 
+                                name="password2" 
                     error={errors.password2}
                     touched={touched.password2}
                     type="password"

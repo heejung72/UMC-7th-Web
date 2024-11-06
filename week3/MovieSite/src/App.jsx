@@ -1,86 +1,105 @@
-import './App.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import HomePage from './pages/home'
-import Login from './pages/login'
-import SignupPage from './pages/signup'
-import Search from './pages/search'
-import Movies from './pages/movies'
-import RootLayout from './layout/rootlayout'
-import NowPlaying from './pages/nowplaying'
-import Popular from './pages/popular'
-import TopRated from './pages/toprated'
-import UpComing from './pages/upcoming'
+import './App.css';
+import { createBrowserRouter, RouterProvider, Route, Navigate } from 'react-router-dom';
+import HomePage from './pages/home';
+import Login from './pages/login';
+import SignupPage from './pages/signup';
+import Search from './pages/search';
+import Movies from './pages/movies';
+import RootLayout from './layout/rootlayout';
+import NowPlaying from './pages/nowplaying';
+import Popular from './pages/popular';
+import TopRated from './pages/toprated';
+import UpComing from './pages/upcoming';
 import MovieDetail from './pages/MovieDetail';
-// import { MOVIES } from './mocks/movies'
+import Navbar from './components/Navbar'; // Navbar 추가
 
+// 로그인 상태 확인
+const isLoggedIn = () => {
+  return localStorage.getItem('accessToken') !== null;
+};
 
+// 로그인하지 않은 사용자라면 로그인 페이지로 리디렉션
+const PrivateRoute = ({ element }) => {
+  return isLoggedIn() ? element : <Navigate to="/login" />;
+};
+
+// Router 설정
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout/>,
+    element: (
+      <>
+        <Navbar />  {/* 모든 페이지에 Navbar 표시 */}
+        <RootLayout />
+      </>
+    ),
     children: [
       {
         index: true,
-        element: <HomePage/>
+        element: <HomePage />,
       },
       {
         path: 'login',
-        element: <Login/>
+        element: <Login />,
       },
       {
         path: 'signup',
-        element: <SignupPage/>
+        element: <SignupPage />,
       },
       {
         path: 'search',
-        element: <Search/>
+        element: <Search />,
       },
       {
         path: 'movies',
-        element: <Movies/>
-      }
-    ]
+        element: <Movies />,
+      },
+    ],
   },
   {
     path: '/movies',
-    element: <RootLayout/>,
+    element: (
+      <>
+        <Navbar />  {/* 모든 페이지에 Navbar 표시 */}
+        <RootLayout />
+      </>
+    ),
     children: [
       {
         index: true,
-        element: <Movies/>
+        element: <Movies />,
       },
       {
         path: 'nowplaying',
-        element: <NowPlaying/>
-      }
-      ,
+        element: <NowPlaying />,
+      },
       {
         path: 'popular',
-        element: <Popular/>
-      }
-      ,
+        element: <Popular />,
+      },
       {
         path: 'toprated',
-        element: <TopRated/>
-      }
-      ,
+        element: <TopRated />,
+      },
       {
         path: 'upcoming',
-        element: <UpComing/>
-      }
-      ,
+        element: <UpComing />,
+      },
       {
         path: ':movieId',
-        element: <MovieDetail />
-      }
-    ]
+        element: <MovieDetail />,
+      },
+    ],
   },
-])
+  // PrivateRoute로 보호된 페이지
+  {
+    path: '/home',
+    element: <PrivateRoute element={<HomePage />} />,
+  },
+]);
 
 function App() {
-  return( 
-      <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
