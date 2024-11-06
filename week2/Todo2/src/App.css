@@ -10,6 +10,8 @@
   margin-bottom: 20px;
 }
 
+
+
 .todo-input {
   margin-right: 10px;
   padding: 8px;
@@ -18,7 +20,7 @@
 }
 
 .todo-list {
-  width: 100%;
+  width: 500px;
   max-width: 600px;
   margin: auto;
   border: 1px solid #ddd;
