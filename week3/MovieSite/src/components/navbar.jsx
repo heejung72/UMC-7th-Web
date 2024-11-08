@@ -25,7 +25,7 @@ const Logo = styled.h1`
 `;
 
 const Log = styled.div`
-  width: 200px;
+  width: 230px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,7 +66,8 @@ const Navbar = () => {
       setIsLoggedIn(true);
       // 이메일에서 @ 앞부분만 추출하여 사용자 이름 설정
       const email = localStorage.getItem('email');
-      setUserName(email ? email.split('@')[0] + '님' : '사용자');
+      setUserName(email ? email.split('@')[0] + '님 반갑습니다!' : '사용자님 반갑습니다');
+
     }
   }, []);
 

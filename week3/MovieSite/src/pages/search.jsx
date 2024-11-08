@@ -1,105 +1,85 @@
-import { useState } from "react";
 import styled from "styled-components";
-import MovieCard from "../components/moviecards"; // 실제 영화 카드 컴포넌트
-import SkeletonCard from "../components/skeleton/SkeletonCard"; // Skeleton 로딩 컴포넌트
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useCustomFetch from "../hooks/useCustomFetch";
+import MovieCard from '../components/moviecards'; 
 
-const SearchPage = () => {
-  const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
-  const [movies, setMovies] = useState([]); // 검색된 영화 목록 상태
-  const [loading, setLoading] = useState(false); // 로딩 상태
+const Search = () => {
+    const [searchValue, setSearchValue] = useState("");
+    const navigate = useNavigate();
 
-  const handleSearch = async () => {
-    if (!searchQuery) return; // 검색어가 없으면 아무것도 하지 않음
+    const onChangeSearchValue = (event) => {
+        setSearchValue(event.target.value);
+    };
 
-    setLoading(true); // 검색 시작 시 로딩 상태 활성화
+    const [searchParams, setSearchParams] = useSearchParams({
+        mq: ""
+    });
 
-    try {
-      const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchQuery}&api_key=YOUR_API_KEY`);
-      const data = await response.json();
+    const mq = searchParams.get('mq');
 
-      setMovies(data.results || []);
-    } catch (error) {
-      console.error("Error fetching movie data:", error);
-      setMovies([]); // 에러 발생 시 빈 배열로 초기화
-    } finally {
-      setLoading(false); // 로딩 완료 후 로딩 상태 비활성화
-    }
-  };
+    const handleSearchMovie = () => {
+        if (mq == searchValue)
+            return;
+        navigate(`/search?mq=${searchValue}`); // 백틱을 사용한 템플릿 문자열
+    };
 
-  return (
-    <Container>
-      <SearchWrapper>
-        <SearchInput 
-          type="text" 
-          value={searchQuery} 
-          onChange={(e) => setSearchQuery(e.target.value)} 
-          placeholder="영화를 검색하세요..."
-        />
-        <SearchButton onClick={handleSearch}>검색</SearchButton>
-      </SearchWrapper>
+    const handleSearchMovieWithKeyDown = (e) => {
+        if(e.key == 'Enter'){
+            handleSearchMovie();
+        }
+    };
 
-      <MoviesContainer>
-        {loading ? (
-          // 로딩 중에는 Skeleton UI 표시
-          Array(6).fill().map((_, index) => <SkeletonCard key={index} />)
-        ) : (
-          movies.length > 0 ? (
-            // 영화가 있을 경우 MovieCard 컴포넌트로 영화 목록 출력
-            movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
-          ) : (
-            <NoMoviesMessage>{searchQuery ? `"${searchQuery}"` + " 검색된 영화가 없습니다." : "검색어를 입력해 주세요."}</NoMoviesMessage>
-          )
-        )}
-      </MoviesContainer>
-    </Container>
-  );
+    const url = `/search/movie?query=${searchValue}&include_adult=false&language=ko-KR&page=1`;
+    const {data : movies, isLoding, isError} = useCustomFetch(url);
+
+    return (
+        <><SearchContainer>
+            <input
+                placeholder="영화 제목을 입력해주세요 ..."
+                value={searchValue}
+                onChange={onChangeSearchValue}
+                onKeyDown={handleSearchMovieWithKeyDown}
+            />
+            <button onClick={handleSearchMovie}>검색</button>
+        </SearchContainer>
+        <div>
+        {movies.data?.results.map((movie) => (
+            <MovieCard
+            key={movie.id}
+            poster={movie.poster_path}
+            movie = {movie} /> 
+          ))}
+          </div>
+          </>
+    );
 };
 
-export default SearchPage;
+export default Search;
 
-const Container = styled.div`
-  color: white;
-  padding: 20px;
-`;
-
-const SearchWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-`;
-
-const SearchInput = styled.input`
-  width: 300px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-right: 10px;
-  font-size: 16px;
-`;
-
-const SearchButton = styled.button`
-  padding: 10px 20px;
-  background-color: #e83261;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const MoviesContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-`;
-
-const NoMoviesMessage = styled.div`
-  color: white;
-  text-align: center;
-  font-size: 18px;
-  margin-top: 20px;
+const SearchContainer = styled.div`
+    display: flex;
+    justify-content : center;
+    input{
+    flex:1;
+    padding:15px;
+    border: 1px solid rgb(220,220,220);
+    }
+    button{
+    width:80px;
+    background-color:#F82E62;
+    color: white;
+    cursor: pointer;
+    border:none;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px
+    }
+`
+const div = styled.div`
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 150px 이상 크기의 카드로 자동 배치 */
+    grid-gap: 15px;
+    padding: 0 15px;  /* 여백을 주어서 내용이 너무 끝에 붙지 않도록 함 */
 `;

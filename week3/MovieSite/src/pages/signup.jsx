@@ -36,6 +36,10 @@ const SignupPage = () => {
 
             if (response.ok) {
                 console.log('회원가입 성공:', data);
+                
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('email', values.email);  // 이메일 저장
+
                 // 회원가입 성공 후 로그인 페이지로 리디렉션
                 navigate('/login');
             } else {
