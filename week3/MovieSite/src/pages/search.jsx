@@ -76,7 +76,7 @@ const SearchContainer = styled.div`
     border-bottom-right-radius:5px
     }
 `
-const div = styled.div`
+const MovieGrid = styled.div`
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 150px 이상 크기의 카드로 자동 배치 */
