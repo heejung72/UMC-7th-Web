@@ -1,5 +1,5 @@
 import './App.css';
-import { createBrowserRouter, RouterProvider, Route, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import HomePage from './pages/home';
 import Login from './pages/login';
 import SignupPage from './pages/signup';
@@ -11,7 +11,9 @@ import Popular from './pages/popular';
 import TopRated from './pages/toprated';
 import UpComing from './pages/upcoming';
 import MovieDetail from './pages/MovieDetail';
-import Navbar from './components/Navbar'; // Navbar 추가
+import Navbar from './components/navbar'; // Navbar 추가
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 // 로그인 상태 확인
 const isLoggedIn = () => {
@@ -53,41 +55,32 @@ const router = createBrowserRouter([
       {
         path: 'movies',
         element: <Movies />,
-      },
-    ],
-  },
-  {
-    path: '/movies',
-    element: (
-      <>
-        <Navbar />  {/* 모든 페이지에 Navbar 표시 */}
-        <RootLayout />
-      </>
-    ),
-    children: [
-      {
-        index: true,
-        element: <Movies />,
-      },
-      {
-        path: 'nowplaying',
-        element: <NowPlaying />,
-      },
-      {
-        path: 'popular',
-        element: <Popular />,
-      },
-      {
-        path: 'toprated',
-        element: <TopRated />,
-      },
-      {
-        path: 'upcoming',
-        element: <UpComing />,
-      },
-      {
-        path: ':movieId',
-        element: <MovieDetail />,
+        children: [
+          {
+            index: true,
+            element: <Movies />,
+          },
+          {
+            path: 'nowplaying',
+            element: <NowPlaying />,
+          },
+          {
+            path: 'popular',
+            element: <Popular />,
+          },
+          {
+            path: 'toprated',
+            element: <TopRated />,
+          },
+          {
+            path: 'upcoming',
+            element: <UpComing />,
+          },
+          {
+            path: ':movieId',
+            element: <MovieDetail />,
+          },
+        ],
       },
     ],
   },
@@ -98,8 +91,17 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
