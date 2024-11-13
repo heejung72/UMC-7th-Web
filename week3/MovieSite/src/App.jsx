@@ -55,32 +55,41 @@ const router = createBrowserRouter([
       {
         path: 'movies',
         element: <Movies />,
-        children: [
-          {
-            index: true,
-            element: <Movies />,
-          },
-          {
-            path: 'nowplaying',
-            element: <NowPlaying />,
-          },
-          {
-            path: 'popular',
-            element: <Popular />,
-          },
-          {
-            path: 'toprated',
-            element: <TopRated />,
-          },
-          {
-            path: 'upcoming',
-            element: <UpComing />,
-          },
-          {
-            path: ':movieId',
-            element: <MovieDetail />,
-          },
-        ],
+      },
+    ],
+  },
+  {
+    path: '/movies',
+    element: (
+      <>
+        <Navbar />  {/* 모든 페이지에 Navbar 표시 */}
+        <RootLayout />
+      </>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Movies />,
+      },
+      {
+        path: 'nowplaying',
+        element: <NowPlaying />,
+      },
+      {
+        path: 'popular',
+        element: <Popular />,
+      },
+      {
+        path: 'toprated',
+        element: <TopRated />,
+      },
+      {
+        path: 'upcoming',
+        element: <UpComing />,
+      },
+      {
+        path: ':movieId',
+        element: <MovieDetail />,
       },
     ],
   },
@@ -91,17 +100,16 @@ const router = createBrowserRouter([
   },
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
 function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <RouterProvider router={router} />
-      </Suspense>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  );
+  
+  return(
+  <QueryClientProvider client={queryClient}>
+     <RouterProvider router={router} />
+     <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
+  )
 }
 
 export default App;
