@@ -37,7 +37,7 @@ const SearchMovieList = () => {
     if (mq && movies?.results?.length === 0) {
         return (
             <MoviesContainer>
-                <h1>해당하는 검색어 "{mq}"에 해당하는 데이터가 없습니다.</h1>
+                <h1>해당하는 검색어 {mq}에 해당하는 데이터가 없습니다.</h1>
             </MoviesContainer>
         );
     }
