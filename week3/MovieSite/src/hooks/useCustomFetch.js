@@ -18,9 +18,8 @@ const useCustomFetch = (url) => {
 
 export default useCustomFetch;*/
 
-
 import { useEffect, useState } from "react"
-import axiosInstance  from "../apis/axios-instance"
+import {axiosInstance} from '../apis/axios-instance';
 
 const useCustomFetch = (url) => {
     const [data, setData] = useState([]);

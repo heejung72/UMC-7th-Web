@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-
 const Movies = () => {
   const navigate = useNavigate();
 
@@ -32,7 +31,6 @@ const Container = styled.div`
 const CategoryWrapper = styled.div`
   display: flex;
   align-items: center;
-
    .nowplaying {
     background-image: url('../mocks/1.jpeg'); 
     background-size: cover; /* 이미지 크기 조정 */
@@ -53,8 +51,6 @@ const CategoryWrapper = styled.div`
     background-size: cover;
     background-position: center;
   }
-
-
   .category {
     display: flex;
     justify-content: center;

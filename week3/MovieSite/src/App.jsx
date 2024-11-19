@@ -1,5 +1,5 @@
 import './App.css';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/home';
 import Login from './pages/login';
 import SignupPage from './pages/signup';
@@ -12,8 +12,7 @@ import TopRated from './pages/toprated';
 import UpComing from './pages/upcoming';
 import MovieDetail from './pages/MovieDetail';
 import Navbar from './components/navbar'; // Navbar 추가
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 
 // 로그인 상태 확인
 const isLoggedIn = () => {
@@ -100,16 +99,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const queryClient = new QueryClient()
-
 function App() {
-  
-  return(
-  <QueryClientProvider client={queryClient}>
-     <RouterProvider router={router} />
-     <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>
-  )
-}
+  return <RouterProvider router={router} />;}
 
-export default App;
+  export default App;

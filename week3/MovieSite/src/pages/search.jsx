@@ -1,36 +1,49 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import useCustomFetch from "../hooks/useCustomFetch";
 import MovieCard from '../components/moviecards';
-import CardListSkeleton from "../components/skeleton/card-list-skeleton"; // Updated to use CardListSkeleton for multiple skeletons
-import SearchMovieList from "../components/search-movie-list"
+import { debounce } from "../utils/debounce";
 
 const Search = () => {
     const [searchValue, setSearchValue] = useState("");
+    const [debouncedValue, setDebouncedValue] = useState("");
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams({ mq: '' });
+    const [searchParams] = useSearchParams({ mq: "" });
 
     const mq = searchParams.get('mq');
 
+    // 입력 필드 변경 시 검색어 업데이트
     const onChangeSearchValue = (event) => {
         setSearchValue(event.target.value);
     };
 
-    const handleSearchMovie = () => {
-        if (mq === searchValue) return;
-        navigate(`/search?mq=${searchValue}`);
-    };
+    // 검색어가 변경될 때 debounce 적용
+    useEffect(() => {
+        const debouncedSearch = debounce((value) => {
+            setDebouncedValue(value);
+        }, 500); // 500ms 지연
 
+        debouncedSearch(searchValue);
+    }, [searchValue]);
+
+    // 검색어가 변경되면 URL 업데이트
+    useEffect(() => {
+        if (debouncedValue && debouncedValue !== mq) {
+            navigate(`/search?mq=${debouncedValue}`);
+        }
+    }, [debouncedValue, mq, navigate]);
+
+    // API 요청 URL
+    const url = `/search/movie?query=${debouncedValue}&include_adult=false&language=ko-KR&page=1`;
+    const { data: movies, isLoding, isError } = useCustomFetch(url);
+
+    // Enter 키로 검색 기능
     const handleSearchMovieWithKeyDown = (e) => {
         if (e.key === 'Enter') {
-            handleSearchMovie();
+            navigate(`/search?mq=${searchValue}`);
         }
     };
-
-    const url = `/search/movie?query=${searchValue}&include_adult=false&language=ko-KR&page=1`;
-    const { data: movies, isLoading, isError } = useCustomFetch(url);
 
     return (
         <>
@@ -41,21 +54,12 @@ const Search = () => {
                     onChange={onChangeSearchValue}
                     onKeyDown={handleSearchMovieWithKeyDown}
                 />
-                <button onClick={handleSearchMovie}>검색</button>
+                <button onClick={() => navigate(`/search?mq=${searchValue}`)}>검색</button>
             </SearchContainer>
             <MovieGrid>
-                {isLoading ? (
-                    <CardListSkeleton number={20} /> // Display 20 skeletons while loading
-                ) : (
-                    movies?.data?.results.map((movie) => (
-                        <MovieCard
-                            key={movie.id}
-                            poster={movie.poster_path}
-                            movie={movie}
-                        />
-                    ))
-                )}
-                {isError && <ErrorMessage>에러 발생</ErrorMessage>}
+                {movies?.data?.results.map((movie) => (
+                    <MovieCard key={movie.id} poster={movie.poster_path} movie={movie} />
+                ))}
             </MovieGrid>
         </>
     );
@@ -69,11 +73,11 @@ const SearchContainer = styled.div`
     input {
         flex: 1;
         padding: 15px;
-        border: 1px solid rgb(220,220,220);
+        border: 1px solid rgb(220, 220, 220);
     }
     button {
         width: 80px;
-        background-color: #F82E62;
+        background-color: #f82e62;
         color: white;
         cursor: pointer;
         border: none;
@@ -85,13 +89,17 @@ const SearchContainer = styled.div`
 const MovieGrid = styled.div`
     margin-top: 30px;
     display: grid;
-    grid-template-columns: repeat(9, 1fr); /* 9 items per row */
+    grid-template-columns: repeat(9, 1fr);
     grid-gap: 15px;
     padding: 0 15px;
-`;
 
-const ErrorMessage = styled.h1`
-    color: white;
-    text-align: center;
-    width: 100%;
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 `;

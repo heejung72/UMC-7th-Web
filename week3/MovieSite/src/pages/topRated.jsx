@@ -1,63 +1,43 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import MovieCard from '../components/moviecards';
-import { useGetInfiniteMovies } from '../hooks/queries/useGetInfiniteMovies';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components'; 
+import MovieCard from '../components/moviecards'; 
+import {axiosInstance} from '../apis/axios-instance';
+import useCustomFetch from "../hooks/useCustomFetch";
 import CardSkeleton from '../components/skeleton/card-skeleton';
 
 const TopRated = () => {
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    fetchNextPage,
-    hasNextPage,
-  } = useGetInfiniteMovies('top_rated');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100
-      ) {
-        if (hasNextPage) fetchNextPage();
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [fetchNextPage, hasNextPage]);
+  const { data: movies, isLoading, isError } = useCustomFetch(`/movie/top_rated?language=ko-kr&page=1`);
 
   if (isLoading) {
-    return (
-      <div>
-        <CardSkeleton number={20} />
-        <h1>로딩중입니다...</h1>
-      </div>
-    );
+      return (
+          <div>
+            <CardSkeleton number={20} />
+              <h1>로딩중 입니다.</h1>
+          </div>
+      );
   }
 
   if (isError) {
-    return (
-      <div>
-        <h1>에러가 발생했습니다: {error.message}</h1>
-      </div>
-    );
+      return (
+          <div>
+              <h1>에러</h1>
+          </div>
+      );
   }
 
   return (
-    <MoviesContainer>
-      {data?.pages.map((page) =>
-        page.results.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            poster={movie.poster_path}
-            title={movie.title}
-            releaseDate={movie.release_date}
-            movie={movie}
-          />
-        ))
-      )}
-    </MoviesContainer>
+      <MoviesContainer>
+          {movies.data?.results.map((movie) => (
+              <MovieCard 
+                  key={movie.id}
+                  poster={movie.poster_path}
+                  title={movie.title}
+                  releaseDate={movie.release_date}
+                  movie = {movie}
+              />
+          ))}
+      </MoviesContainer>
   );
 };
 
