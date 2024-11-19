@@ -13,7 +13,7 @@ import UpComing from './pages/upcoming';
 import MovieDetail from './pages/MovieDetail';
 import Navbar from './components/navbar'; // Navbar 추가
 
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
 // 로그인 상태 확인
 const isLoggedIn = () => {
   return localStorage.getItem('accessToken') !== null;
@@ -23,7 +23,8 @@ const isLoggedIn = () => {
 const PrivateRoute = ({ element }) => {
   return isLoggedIn() ? element : <Navigate to="/login" />;
 };
-
+// QueryClient 인스턴스 생성
+const queryClient = new QueryClient();
 // Router 설정
 const router = createBrowserRouter([
   {
@@ -99,7 +100,13 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 function App() {
-  return <RouterProvider router={router} />;}
+  return (
+    
+  <RouterProvider router={router} />
+
+  );
+}
 
   export default App;

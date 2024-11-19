@@ -60,14 +60,11 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 로컬 스토리지에서 accessToken이 있으면 로그인 상태로 간주
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       setIsLoggedIn(true);
-      // 이메일에서 @ 앞부분만 추출하여 사용자 이름 설정
       const email = localStorage.getItem('email');
-      setUserName(email ? email.split('@')[0] + '님 반갑습니다!' : '사용자님 반갑습니다');
-
+      setUserName(email ? `${email.split('@')[0]}님 반갑습니다!` : '사용자님 반갑습니다');
     }
   }, []);
 
