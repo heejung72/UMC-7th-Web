@@ -12,7 +12,7 @@ import TopRated from './pages/toprated';
 import UpComing from './pages/upcoming';
 import MovieDetail from './pages/MovieDetail';
 import Navbar from './components/navbar'; // Navbar 추가
-
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'; 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
 // 로그인 상태 확인
 const isLoggedIn = () => {
@@ -103,8 +103,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    
-  <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}> 
+      <RouterProvider router={router} /> 
+      <ReactQueryDevtools initialIsOpen={false} /> 
+    </QueryClientProvider>
 
   );
 }
