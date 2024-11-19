@@ -3,12 +3,13 @@ import styled from "styled-components";
 import MovieCard from "../components/moviecards";
 import CardSkeleton from "../components/skeleton/card-skeleton";
 import { axiosInstance } from "../apis/axios-instance";
+import Pagination from "../components/pagination";
 
 const Popular = () => {
   const [movies, setMovies] = useState([]); // 영화 데이터를 저장
-  const [page, setPage] = useState(1); // 현재 페이지 번호
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+  const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
-  const [hasMore, setHasMore] = useState(true); // 추가 데이터가 있는지 확인
 
   // 데이터를 가져오는 함수
   const fetchMovies = async (page) => {
@@ -17,10 +18,8 @@ const Popular = () => {
       const response = await axiosInstance.get(
         `/movie/popular?language=ko-KR&page=${page}`
       );
-      const newMovies = response.data.results;
-
-      setMovies((prevMovies) => [...prevMovies, ...newMovies]); // 기존 데이터에 새 데이터 추가
-      setHasMore(response.data.page < response.data.total_pages); // 다음 페이지가 있는지 확인
+      setMovies(response.data.results); // 현재 페이지 데이터만 설정
+      setTotalPages(response.data.total_pages); // 전체 페이지 수 설정
     } catch (error) {
       console.error("영화 데이터를 가져오는 중 오류 발생:", error);
     } finally {
@@ -30,26 +29,13 @@ const Popular = () => {
 
   // 페이지 변경 시 데이터를 가져옴
   useEffect(() => {
-    fetchMovies(page);
-  }, [page]);
+    fetchMovies(currentPage);
+  }, [currentPage]);
 
-  // 스크롤 이벤트 핸들러
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100 &&
-      !isLoading &&
-      hasMore
-    ) {
-      setPage((prevPage) => prevPage + 1);
-    }
+  // 페이지 변경 핸들러
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
-
-  // 스크롤 이벤트 등록
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isLoading, hasMore]);
 
   if (isLoading && movies.length === 0) {
     return (
@@ -69,18 +55,25 @@ const Popular = () => {
   }
 
   return (
-    <MoviesContainer>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          poster={movie.poster_path}
-          title={movie.title}
-          releaseDate={movie.release_date}
-          movie={movie}
-        />
-      ))}
+    <>
+      <MoviesContainer>
+        {movies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            poster={movie.poster_path}
+            title={movie.title}
+            releaseDate={movie.release_date}
+            movie={movie}
+          />
+        ))}
+      </MoviesContainer>
       {isLoading && <CardSkeleton number={10} />} {/* 로딩 중 스켈레톤 */}
-    </MoviesContainer>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </>
   );
 };
 

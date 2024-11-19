@@ -3,55 +3,38 @@ import styled from "styled-components";
 import MovieCard from "../components/moviecards";
 import CardSkeleton from "../components/skeleton/card-skeleton";
 import { axiosInstance } from "../apis/axios-instance";
+import Pagination from "../components/pagination";
 
 const NowPlaying = () => {
-  const [movies, setMovies] = useState([]); // 영화 데이터 저장
-  const [page, setPage] = useState(1); // 현재 페이지 번호
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태
-  const [hasMore, setHasMore] = useState(true); // 추가 데이터가 있는지 확인
+  const [movies, setMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 데이터를 가져오는 함수
   const fetchMovies = async (page) => {
     setIsLoading(true);
     try {
       const response = await axiosInstance.get(
         `/movie/now_playing?language=ko-KR&page=${page}`
       );
-      const newMovies = response.data.results;
-
-      setMovies((prevMovies) => [...prevMovies, ...newMovies]); // 기존 영화 데이터에 추가
-      setHasMore(response.data.page < response.data.total_pages); // 다음 페이지가 있는지 확인
+      setMovies(response.data.results);
+      setTotalPages(response.data.total_pages);
     } catch (error) {
-      console.error("영화를 가져오는 중 오류 발생:", error);
+      console.error("영화 데이터를 가져오는 중 오류 발생:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // 페이지가 변경될 때 데이터를 가져옴
   useEffect(() => {
-    fetchMovies(page);
-  }, [page]);
+    fetchMovies(currentPage);
+  }, [currentPage]);
 
-  // 스크롤 이벤트 핸들러
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100 &&
-      !isLoading &&
-      hasMore
-    ) {
-      setPage((prevPage) => prevPage + 1);
-    }
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
-  // 스크롤 이벤트 등록
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isLoading, hasMore]);
-
-  if (isLoading && movies.length === 0) {
+  if (isLoading) {
     return (
       <div>
         <CardSkeleton number={20} />
@@ -60,27 +43,25 @@ const NowPlaying = () => {
     );
   }
 
-  if (!isLoading && movies.length === 0) {
-    return (
-      <div>
-        <h1>영화 데이터를 가져올 수 없습니다.</h1>
-      </div>
-    );
-  }
-
   return (
-    <MoviesContainer>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          poster={movie.poster_path}
-          title={movie.title}
-          releaseDate={movie.release_date}
-          movie={movie}
-        />
-      ))}
-      {isLoading && <CardSkeleton number={10} />} {/* 로딩 시 추가 스켈레톤 표시 */}
-    </MoviesContainer>
+    <>
+      <MoviesContainer>
+        {movies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            poster={movie.poster_path}
+            title={movie.title}
+            releaseDate={movie.release_date}
+            movie={movie}
+          />
+        ))}
+      </MoviesContainer>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </>
   );
 };
 
