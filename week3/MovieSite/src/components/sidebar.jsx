@@ -50,6 +50,19 @@ const Sidebar = () => {
         영화
       </SidebarButton>
       </Link>
+
+      <Link to="/subscribe">
+        <SidebarButton>
+          구독
+        </SidebarButton>
+      </Link>
+
+      <Link to="/purchase">
+        <SidebarButton>
+          개별 구매
+        </SidebarButton>
+      </Link>
+
       </SidebarContainer>
 
   );

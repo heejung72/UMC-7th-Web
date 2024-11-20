@@ -36,8 +36,6 @@ const SignupPage = () => {
 
             if (response.ok) {
                 console.log('회원가입 성공:', data);
-                
-                            
                 localStorage.setItem('accessToken', data.accessToken);
                 localStorage.setItem('email', values.email);  // 이메일 저장
                 navigate('/login', { replace: true });
