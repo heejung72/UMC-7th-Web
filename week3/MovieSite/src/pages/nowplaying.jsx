@@ -34,6 +34,7 @@ const NowPlaying = () => {
     setCurrentPage(page);
   };
 
+
   if (isLoading) {
     return (
       <div>
