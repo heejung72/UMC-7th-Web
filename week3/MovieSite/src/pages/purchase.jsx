@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import MovieCard from "../components/moviecards";
+import MovieCard from "../components/moviecards";  // MovieCard 임포트
 import CardSkeleton from "../components/skeleton/card-skeleton";
 import { axiosInstance } from "../apis/axios-instance";
 import Pagination from "../components/pagination";
@@ -29,7 +29,7 @@ const Purchase = () => {
         // 영화 장르인 경우, Trending 영화 가져오기
         url = `/trending/movie/week?language=ko-KR&page=${page}`;
       } else if (genre === "독일") {
-        // 한국 영화 가져오기 (with_origin_country=KR)
+        // 독일 영화 가져오기 (with_origin_country=DE)
         url = `/discover/movie?language=ko-KR&with_origin_country=${genres[genre]}&page=${page}`;
       } else {
         // 특정 장르(애니메이션, 호러)에 따라 데이터 가져오기
@@ -154,7 +154,7 @@ const GenreTab = styled.button`
 
 const MoviesContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, 1fr); /* 한 줄에 5개의 카드 */
+  grid-template-columns: repeat(8, 1fr); /* 한 줄에 8개의 카드 */
   grid-gap: 15px;
   padding: 20px;
 

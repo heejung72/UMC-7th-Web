@@ -13,6 +13,8 @@ import UpComing from './pages/upcoming';
 import MovieDetail from './pages/MovieDetail';
 import Navbar from './components/navbar'; // Navbar 추가
 import Purchase from './pages/purchase';
+import Subscribe from './pages/subscribe';
+import TvDetail from './pages/TvDetail'; // TvDetail 추가
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'; 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
 
@@ -35,7 +37,7 @@ const router = createBrowserRouter([
     path: '/',
     element: (
       <>
-        <Navbar />  {/* 모든 페이지에 Navbar 표시 */}
+        <Navbar /> {/* 모든 페이지에 Navbar 표시 */}
         <RootLayout />
       </>
     ),
@@ -61,33 +63,40 @@ const router = createBrowserRouter([
         element: <Purchase />,
       },
       {
+        path: 'subscribe',
+        element: <Subscribe />,
+      },
+      {
         path: 'movies',
         element: <Movies />,
-        children: [
-          {
-            path: 'nowplaying',
-            element: <NowPlaying />,
-          },
-          {
-            path: 'popular',
-            element: <Popular />,
-          },
-          {
-            path: 'toprated',
-            element: <TopRated />,
-          },
-          {
-            path: 'upcoming',
-            element: <UpComing />,
-          },
-          {
-            path: ':movieId',
-            element: <MovieDetail />,
-          },
-        ],
+      },
+      {
+        path: 'movies/nowplaying',
+        element: <NowPlaying />,
+      },
+      {
+        path: 'movies/popular',
+        element: <Popular />,
+      },
+      {
+        path: 'movies/toprated',
+        element: <TopRated />,
+      },
+      {
+        path: 'movies/upcoming',
+        element: <UpComing />,
+      },
+      {
+        path: 'movies/:movieId',
+        element: <MovieDetail />, // 영화 상세 페이지
+      },
+      {
+        path: 'tv/:tvId', // TV 상세 페이지 경로
+        element: <TvDetail />,
       },
     ],
   },
+
   // PrivateRoute로 보호된 페이지
   {
     path: 'home',
@@ -97,8 +106,8 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
-
 ]);
+
 
 function App() {
   return (
