@@ -1,0 +1,23 @@
+.InputTodo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+    text-align: center;
+    background-color:lightgray;
+    width : 500px;
+    margin-left:500px;
+}
+.textbar{
+   margin : 10px;
+   width : 200px;
+   height : 30px;
+   border-radius: 5px;
+   border: 1px solid #ddd;
+}
+.submitbutton{ 
+    width : 30px;   
+    height : 30px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}

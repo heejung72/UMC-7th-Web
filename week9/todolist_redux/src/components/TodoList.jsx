@@ -1,10 +1,11 @@
-import React from 'react'
 import {useSelector, useDispatch } from 'react-redux'
 import { remove , complete } from '../redux/todoSlice'
 import s from './TodoList.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
-
+// npm install --save @fortawesome/react-fontawesome
+// npm install --save @fortawesome/free-solid-svg-icons
+// npm install --save @fortawesome/fontawesome-svg-core
 
 export default function TodoList() {
     const todolist = useSelector(state => state.todo)

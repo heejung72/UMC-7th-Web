@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+.list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 400px;
+    margin-left:500px;
+}
+.checkbox{
+    width:30px;
+    height:30px;
+}
+.deleteBtn{
+    width:30px;
+    height:30px;
+}
