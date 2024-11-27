@@ -7,6 +7,7 @@ import { calculateTotals } from './features/cart/cartSlice';
 import { useEffect } from 'react';
 import ModalPortal from './components/ModalPortal';
 import Modal from './components/Modal';
+import ModalButton from './components/ModalButton';  // ModalButton 추가
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
           <ModalPortal>
             <Modal>
               <h4>담아주신 모든 음반을 삭제하시겠습니까?</h4>
+              <ModalButton />  {/* ModalButton 추가 */}
             </Modal>
           </ModalPortal>
         )}

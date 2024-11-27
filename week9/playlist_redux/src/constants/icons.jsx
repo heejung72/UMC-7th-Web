@@ -1,7 +1,8 @@
 // BY HERO_ICONS
-export const CartIcon = () => {
+export const CartIcon = (props) => {
     return (
       <svg
+      {...props}
         xmlns='http://www.w3.org/2000/svg'
         className='h-6 w-6 '
         fill='none'
@@ -18,9 +19,10 @@ export const CartIcon = () => {
     );
   };
   
-  export const ChevronDown = () => {
+  export const ChevronDown = (props) => {
     return (
       <svg
+      {...props}
         xmlns='http://www.w3.org/2000/svg'
         className='h-6 w-6'
         fill='none'
@@ -33,9 +35,10 @@ export const CartIcon = () => {
     );
   };
   
-  export const ChevronUp = () => {
+  export const ChevronUp = (props) => {
     return (
       <svg
+      {...props}
         xmlns='http://www.w3.org/2000/svg'
         className='h-6 w-6'
         fill='none'

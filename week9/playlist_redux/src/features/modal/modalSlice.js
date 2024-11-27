@@ -2,22 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isOpen: false,
-}
+};
 
-const modalSlice = createSlice ({
-    name : 'modal',
+const modalSlice = createSlice({
+    name: "modal",
     initialState,
-    reducers:{
-        // todo modal을 여는 action
-        openModal : (state, action) => {
+    reducers: {
+        // 모달 열기
+        openModal: (state) => {
             state.isOpen = true;
         },
-        // todo modal을 닫는 action
-        closeModal : (state, action) => {
+        // 모달 닫기
+        closeModal: (state) => {
             state.isOpen = false;
-        }
-    }
-})
+        },
+    },
+});
 
-export const { openModal, closeModal} = modalSlice.actions;
+export const { openModal, closeModal } = modalSlice.actions;
 export default modalSlice.reducer;
