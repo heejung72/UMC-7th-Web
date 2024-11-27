@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import Navbar from './components/Navbar';
+import CartContainer from './components/CartContainer';
+import Footer from './components/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { calculateTotals } from './features/cart/cartSlice';
+import { useEffect } from 'react';
+import ModalPortal from './components/ModalPortal';
+import Modal from './components/Modal';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch();
+
+  // Redux state에서 필요한 값 가져오기
+  const { cartItems } = useSelector((store) => store.cart);
+  const { isOpen } = useSelector((store) => store.modal);
+
+  // cartItems 변경 시 총합 계산 디스패치
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [cartItems, dispatch]);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <Navbar />
+      </header>
+      <main>
+        <CartContainer />
+        {isOpen && (
+          <ModalPortal>
+            <Modal>
+              <h4>담아주신 모든 음반을 삭제하시겠습니까?</h4>
+            </Modal>
+          </ModalPortal>
+        )}
+      </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
