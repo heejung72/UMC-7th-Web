@@ -1,11 +1,9 @@
 import CartItem from "./CartItem";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "../features/modal/modalSlice";
+import useCartStore from "../store/useCartStore";
 import styled from "styled-components";
 
 const CartContainer = () => {
-  const dispatch = useDispatch();
-  const { amount, cartItems, total } = useSelector((store) => store.cart);
+  const { cartItems, total, amount, openModal } = useCartStore();
 
   if (amount < 1) {
     return (
@@ -23,7 +21,7 @@ const CartContainer = () => {
       <header>
         <h2>당신이 선택한 음반</h2>
       </header>
-      <div>
+      <div className="cart-items">
         {cartItems.map((item) => (
           <CartItem key={item.id} {...item} />
         ))}
@@ -32,15 +30,10 @@ const CartContainer = () => {
         <hr />
         <div className="cart-total">
           <h4>
-            총 가격 <span>\ {total}원</span>
+            총 가격 <span>₩ {total}원</span>
           </h4>
         </div>
-        <button
-          className="btn clear-btn"
-          onClick={() => {
-            dispatch(openModal());
-          }}
-        >
+        <button className="btn clear-btn" onClick={() => openModal("장바구니를 초기화하시겠습니까?")}>
           장바구니 초기화
         </button>
       </footer>
@@ -50,10 +43,11 @@ const CartContainer = () => {
 
 export default CartContainer;
 
-export const StyledCartContainer = styled.section`
+const StyledCartContainer = styled.section`
   padding: 20px;
   background: #f9f9f9;
   border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   header h2 {
     font-size: 1.5rem;
@@ -70,6 +64,7 @@ export const StyledCartContainer = styled.section`
 
     hr {
       margin: 10px 0;
+      border: 1px solid #ddd;
     }
 
     .cart-total {
@@ -86,6 +81,8 @@ export const StyledCartContainer = styled.section`
       padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
     }
 
     .clear-btn:hover {

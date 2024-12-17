@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
-import cartItems from "../../constants/cartItems";
+import { createSlice } from "@reduxjs/toolkit";
+import cartItems from "../../constants/cartItems"; // 초기값으로 사용될 장바구니 항목들
 
-// 수량/ 금액/ 총 구매금액
+// 초기값 설정 (실제 cartItems 값으로 설정)
 const initialState = {
-    cartItems: cartItems,
+    cartItems: cartItems.length > 0 ? cartItems : [],  // cartItems가 있다면 사용, 없으면 빈 배열
     amount: 0,
     total: 0,
 };
 
 const cartSlice = createSlice({
-    name: 'cart',
+    name: "cart",
     initialState,
     reducers: {
         // 수량 증가
@@ -35,7 +35,7 @@ const cartSlice = createSlice({
         },
         // 모든 아이템 제거 (clear)
         clearCart: (state) => {
-            state.cartItems = [];
+            state.cartItems = []; // 장바구니 초기화
         },
         // 총 금액 계산 (각 item * 수량의 합)
         calculateTotals: (state) => {
@@ -55,3 +55,4 @@ const cartSlice = createSlice({
 
 export const { increase, decrease, removeItem, clearCart, calculateTotals } = cartSlice.actions;
 export default cartSlice.reducer;
+

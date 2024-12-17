@@ -1,25 +1,25 @@
 import { CartIcon } from "../constants/icons";
-import { useSelector } from "react-redux";
+import useCartStore from "../store/useCartStore"; // Zustand 스토어 임포트
 import styled from "styled-components";
 
 const Navbar = () => {
-    const { amount } = useSelector((state) => state.cart);
+  const { amount } = useCartStore(); // Zustand 상태에서 amount 가져오기
 
-    return (
-        <StyledNavbar>
-            <div className="nav-center">
-                <div className="nav-logo">
-                    <h3>ReaL HEE PlayList</h3>
-                    <CartIcon />
-                </div>
-                <div className="nav-container">
-                    <div className="amount-container">
-                        <p className="total-amount">{amount}</p>
-                    </div>
-                </div>
-            </div>
-        </StyledNavbar>
-    );
+  return (
+    <StyledNavbar>
+      <div className="nav-center">
+        <div className="nav-logo">
+          <h3>ReaL HEE PlayList</h3>
+          <CartIcon />
+        </div>
+        <div className="nav-container">
+          <div className="amount-container">
+            <p className="total-amount">{amount}</p>
+          </div>
+        </div>
+      </div>
+    </StyledNavbar>
+  );
 };
 
 export default Navbar;
@@ -72,6 +72,6 @@ const StyledNavbar = styled.nav`
     align-items: center;
     position: relative;
     top: -5px;
-    right : 950px;
+    right: 0;
   }
 `;

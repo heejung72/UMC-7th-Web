@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isOpen: false,
+    isOpen: false, // 모달이 열려있는지 여부
 };
 
 const modalSlice = createSlice({
@@ -21,3 +21,4 @@ const modalSlice = createSlice({
 
 export const { openModal, closeModal } = modalSlice.actions;
 export default modalSlice.reducer;
+
